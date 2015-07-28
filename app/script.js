@@ -16,4 +16,20 @@ $(function() {
       $("#verb").text(verb);
     });
   });
+//make an event handler that, when the button is clicked sends a post request to server
+$('#submitWords').on('submit', function(event) {
+    event.preventDefault();
+    //get the text entered in the text box and save to a variable
+    var adjective = $('input[name=adjective]').val();
+    var adjectivePost;
+
+    if (adjective) {
+      adjectivePost = {word: adjective};
+      $.post('adjective', adjectivePost, function(response) {
+          var adjectiveRes = response.message;
+          $('#adjectiveRes').text(adjectiveRes);
+      });
+    }
+  });
+
 });

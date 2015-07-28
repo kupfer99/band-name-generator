@@ -2,9 +2,14 @@
 
 
 var express = require("express");
+var bodyparser = require('body-parser');
 var app = express();
 var port = process.env.PORT || 3000;
 
+app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({
+  extended: true
+}));
 app.use(express.static(__dirname + '/app/'));
 // make an adjective constructor function
 var Adjective = function(){
@@ -63,11 +68,30 @@ function getRandomWord(object) {
   return {word: randomProp};
 }
 
+function postRandomWord(word, wordObject) {
+  //check if the word is on the object
+  if (!wordObject.hasOwnProperty(word)) {
+  //if it's not on the object, add it and send a message that we added it
+  wordObject[word] = true;
+  return {message: 'Thanks! We added your fabulous word, ' + word + ' to our list.'};
+  }
+
+  return {message: 'Thanks! We already have your word, ' + word + ' in our list.'};
+  //if it is on the object, send a polite message saying we have it
+
+  //those messages will be the return value of this function
+
+}
+
 app.get('/', function(req, res) {
   res.send('/index.html');
 });
 app.get('/adjective', function(req, res){
   res.json(getRandomWord(adjective));
+});
+app.post('/adjective', function(req, res){
+  console.log(req.body);
+  res.json(postRandomWord(req.body.word, adjective));
 });
 app.get('/noun', function(req, res) {
   res.json(getRandomWord(noun));
