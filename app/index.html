@@ -21,22 +21,17 @@
       </h3>
       <form id="submitWords">
         <label>
-          Give us an adjective:
+          Give us an word and choose the part of speech:
         </label>
-        <input type="text" name="adjective" />
-        <label>
-          Give us a noun:
-        </label>
-        <input type="text" name="noun" />
-        <label>
-          Give us a verb:
-        </label>
-        <input type="text" name="verb" />
+        <input type="text" name="aWord" />
+        <select name="partOfSpeech">
+          <option name="adjective">Adjective</option>
+          <option name="noun">Noun</option>
+          <option name="verb">Verb</option>
+        </select>
         <input type="submit" value="Submit Words" />
       </form>
-      <p id="adjectiveRes"></p>
-      <p id="nounRes"></p>
-      <p id="verbRes"></p>
+      <p id="wordRes"></p>
 
       <!-- <form id="submitWords">
         <label>

@@ -20,30 +20,31 @@ $(function() {
 $('#submitWords').on('submit', function(event) {
     event.preventDefault();
     //get the text entered in the text box and save to a variable
-    var adjective = $('input[name=adjective]').val();
-    var noun = $('input[name=noun]').val();
-    var verb = $('input[name=verb]').val();
+    var wordToAdd = $('input[name=aWord]').val();
+    var adjChoice = $('option[name=adjective]');
+    var nounChoice = $('option[name=noun]');
+    var verbChoice = $('option[name=verb]');
     var adjectivePost;
     var nounPost;
     var verbPost;
 
     if (adjective) {
       adjectivePost = {word: adjective};
-      $.post('adjective', adjectivePost, function(response) {
+      $.post("adjective", adjectivePost, function(response) {
           var adjectiveRes = response.message;
-          $('#adjectiveRes').text(adjectiveRes);
+          $('#wordRes').text(adjectiveRes);
       });
     } else if (noun) {
       nounPost = {word: noun};
-      $.post('noun', nounPost, function(response) {
+      $.post("noun", nounPost, function(response) {
           var nounRes = response.message;
-          $('#nounRes').text(nounRes);
+          $('#wordRes').text(nounRes);
       });
     } else if (verb) {
       verbPost = {word: verb};
-      $.post('verb', verbPost, function(response) {
+      $.post("verb", verbPost, function(response) {
           var verbRes = response.message;
-          $('#verbRes').text(verbRes);
+          $('#wordRes').text(verbRes);
       });
     }
   });
