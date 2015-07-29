@@ -7,6 +7,7 @@ var Adjective = require('./lib/adjective.js');
 var Noun = require('./lib/noun.js');
 var Verb = require('./lib/verb.js');
 var getRandomWord = require('./lib/getRandomWord.js');
+var postRandomWord = require('./lib/postRandomWord.js');
 var app = express();
 var port = process.env.PORT || 3000;
 
@@ -19,21 +20,6 @@ app.use(express.static(__dirname + '/app/'));
 var adjective = new Adjective();
 var verb = new Verb();
 var noun = new Noun();
-
-function postRandomWord(word, wordObject) {
-  //check if the word is on the object
-  if (!wordObject.hasOwnProperty(word)) {
-  //if it's not on the object, add it and send a message that we added it
-  wordObject[word] = true;
-  return {message: 'Thanks! We added your fabulous word, ' + word + ' to our list.'};
-  }
-
-  return {message: 'Thanks! We already have your word, ' + word + ' in our list.'};
-  //if it is on the object, send a polite message saying we have it
-
-  //those messages will be the return value of this function
-
-}
 
 
 app.get('/', function(req, res) {
