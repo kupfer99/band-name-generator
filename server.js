@@ -3,6 +3,10 @@
 
 var express = require("express");
 var bodyparser = require('body-parser');
+var Adjective = require('./lib/adjective.js');
+var Noun = require('./lib/noun.js');
+var Verb = require('./lib/verb.js');
+var getRandomWord = require('./lib/getRandomWord.js');
 var app = express();
 var port = process.env.PORT || 3000;
 
@@ -11,62 +15,10 @@ app.use(bodyparser.urlencoded({
   extended: true
 }));
 app.use(express.static(__dirname + '/app/'));
-// make an adjective constructor function
-var Adjective = function(){
-  this.aromatic = true;
-  this.petulant = true;
-  this.zealous = true;
-  this.morbid = true;
-  this.ecstatic = true;
-  this.lecherous = true;
-  this.simmering = true;
-  this.corpulant = true;
-  this.luminous = true;
-  this.nefarious = true;
-  this.ubiquitous = true;
-  this.holy = true;
-};
-var Noun = function() {
-  this.unicorns = true;
-  this.ketchups = true;
-  this.corpses = true;
-  this.clowns = true;
-  this.rodeos = true;
-  this.leftovers = true;
-  this.smugglers = true;
-  this.landlords = true;
-  this.butter = true;
-  this.machines = true;
-  this.serpents = true;
-  this.monks = true;
-};
-var Verb = function() {
-  this.swimming = true;
-  this.panting = true;
-  this.mutilating = true;
-  this.clapping = true;
-  this.slobbering = true;
-  this.wailing = true;
-  this.undulating = true;
-  this.flying = true;
-  this.waddling = true;
-  this.floundering = true;
-  this.drinking = true;
-  this.frollicking = true;
-};
-var verb = new Verb();
-var adjective = new Adjective();
-var noun = new Noun();
-// make that word retrieval function
-function getRandomWord(object) {
 
-  // get all of those properties into an array
-  var propArray = Object.keys(object);
-  // pick a random word from the array
-  var randomProp = propArray[Math.floor(Math.random()*propArray.length)];
-  // return that word in an object
-  return {word: randomProp};
-}
+var adjective = new Adjective();
+var verb = new Verb();
+var noun = new Noun();
 
 function postRandomWord(word, wordObject) {
   //check if the word is on the object
@@ -83,6 +35,7 @@ function postRandomWord(word, wordObject) {
 
 }
 
+
 app.get('/', function(req, res) {
   res.send('/index.html');
 });
@@ -90,14 +43,19 @@ app.get('/adjective', function(req, res){
   res.json(getRandomWord(adjective));
 });
 app.post('/adjective', function(req, res){
-  console.log(req.body);
   res.json(postRandomWord(req.body.word, adjective));
 });
 app.get('/noun', function(req, res) {
   res.json(getRandomWord(noun));
 });
+app.post('/noun', function(req, res){
+  res.json(postRandomWord(req.body.word, noun));
+});
 app.get('/verb', function(req, res) {
   res.json(getRandomWord(verb));
+});
+app.post('/verb', function(req, res){
+  res.json(postRandomWord(req.body.word, verb));
 });
 app.listen(port, function(){
   console.log('server started on port ' + port);
