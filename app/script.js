@@ -21,13 +21,29 @@ $('#submitWords').on('submit', function(event) {
     event.preventDefault();
     //get the text entered in the text box and save to a variable
     var adjective = $('input[name=adjective]').val();
+    var noun = $('input[name=noun]').val();
+    var verb = $('input[name=verb]').val();
     var adjectivePost;
+    var nounPost;
+    var verbPost;
 
     if (adjective) {
       adjectivePost = {word: adjective};
       $.post('adjective', adjectivePost, function(response) {
           var adjectiveRes = response.message;
           $('#adjectiveRes').text(adjectiveRes);
+      });
+    } else if (noun) {
+      nounPost = {word: noun};
+      $.post('noun', nounPost, function(response) {
+          var nounRes = response.message;
+          $('#nounRes').text(nounRes);
+      });
+    } else if (verb) {
+      verbPost = {word: verb};
+      $.post('verb', verbPost, function(response) {
+          var verbRes = response.message;
+          $('#verbRes').text(verbRes);
       });
     }
   });
