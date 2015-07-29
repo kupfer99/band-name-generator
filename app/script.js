@@ -27,22 +27,21 @@ $('#submitWords').on('submit', function(event) {
     var adjectivePost;
     var nounPost;
     var verbPost;
-
-    if (adjective) {
-      adjectivePost = {word: adjective};
-      $.post("adjective", adjectivePost, function(response) {
+    if ($('select[name=partOfSpeech]').val() == '1') {
+      adjectivePost = {word: wordToAdd};
+      $.post('adjective', adjectivePost, function(response) {
           var adjectiveRes = response.message;
           $('#wordRes').text(adjectiveRes);
       });
-    } else if (noun) {
-      nounPost = {word: noun};
-      $.post("noun", nounPost, function(response) {
+    } else if ($('select[name=partOfSpeech]').val() == '2') {
+      nounPost = {word: wordToAdd};
+      $.post('noun', nounPost, function(response) {
           var nounRes = response.message;
           $('#wordRes').text(nounRes);
       });
-    } else if (verb) {
-      verbPost = {word: verb};
-      $.post("verb", verbPost, function(response) {
+    } else if ($('select[name=partOfSpeech]').val() == '3') {
+      verbPost = {word: wordToAdd};
+      $.post('verb', verbPost, function(response) {
           var verbRes = response.message;
           $('#wordRes').text(verbRes);
       });
