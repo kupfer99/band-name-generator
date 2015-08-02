@@ -20,10 +20,8 @@ $(function() {
 $('#submitWords').on('submit', function(event) {
     event.preventDefault();
     //get the text entered in the text box and save to a variable
-    var wordToAdd = $('input[name=aWord]').val();
-    var adjChoice = $('option[name=adjective]');
-    var nounChoice = $('option[name=noun]');
-    var verbChoice = $('option[name=verb]');
+    var wordAdd = $('input[name=aWord]').val();
+    var wordToAdd = wordAdd.toLowerCase();
     var adjectivePost;
     var nounPost;
     var verbPost;
@@ -47,5 +45,86 @@ $('#submitWords').on('submit', function(event) {
       });
     }
   });
-
 });
+$('#remWords').on('submit', function(event) {
+  event.preventDefault();
+
+  // var masterList = [];
+  var wordToRemove = $('input[name=removeWord]').val().toLowerCase();
+  var wordRem = {word: wordToRemove};
+  $.ajax({
+    url: 'adjective',
+    type: 'DELETE',
+    data: wordRem,
+    // success: function(response) {
+    // console.log(response);
+      // }
+
+    });
+  // $.get("adjectiveList", function(response) {
+  //   // var dirtyArray = response;
+  //   $.each(response, function() {
+  //     if(wordToRemove == this) {
+  //       var index = response.indexOf(this);
+  //       delete response[index];
+  //       var cleanArray = response;
+  //       $.post('postAdjList', cleanArray, function (response) {
+  //         console.log(cleanArray);
+  //       })
+  //       console.log(cleanArray);
+  //     }
+  //   });
+  // });
+})
+
+$("#getAdj").click(function(){
+  $('#adjDisplay li').remove();
+  $.get("adjectiveList", function(response) {
+    response.sort(function(a,b) {
+      if(a > b){
+        return 1;
+      } else if (a < b) {
+        return -1;
+      } else {
+        return 0;
+      }
+    })
+    $.each(response, function(){
+      $('<li>' + this + '</li>').appendTo('#adjDisplay');
+    })
+  });
+})
+$("#getNoun").click(function(){
+  $('#nounDisplay li').remove();
+  $.get("nounList", function(response) {
+    response.sort(function(a,b) {
+      if(a > b){
+        return 1;
+      } else if (a < b) {
+        return -1;
+      } else {
+        return 0;
+      }
+    })
+    $.each(response, function(){
+      $('<li>' + this + '</li>').appendTo('#nounDisplay');
+    })
+  });
+})
+$("#getVerb").click(function(){
+  $('#verbDisplay li').remove();
+  $.get("verbList", function(response) {
+    response.sort(function(a,b) {
+      if(a > b){
+        return 1;
+      } else if (a < b) {
+        return -1;
+      } else {
+        return 0;
+      }
+    })
+    $.each(response, function(){
+      $('<li>' + this + '</li>').appendTo('#verbDisplay');
+    })
+  });
+})

@@ -31,10 +31,28 @@
         </select>
         <input type="submit" value="Submit Words" />
       </form>
+      <form id="remWords">
+        <label>
+          I want to remove this word:
+        </label>
+        <input type="text" name="removeWord" />
+        <input type="submit" value="Get it out!" />
+      </form>
       <p id="wordRes"></p>
       <div id="adjShow">
-        <h2>Adjectives</h2>
-        <p id="adjDisplay"></p>
+        <button id="getAdj">Show Adjectives</button>
+        <ul id="adjDisplay">
+        </ul>
+      </div>
+      <div id="nounShow">
+        <button id="getNoun">Show Nouns</button>
+        <ul id="nounDisplay">
+        </ul>
+      </div>
+      <div id="verbShow">
+        <button id="getVerb">Show Verbs</button>
+        <ul id="verbDisplay">
+        </ul>
       </div>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
       </script>
