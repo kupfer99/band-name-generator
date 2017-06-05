@@ -1,109 +1,197 @@
 'use strict';
 
-$(function() {
-  $('#name').click(function() {
-    $.get('adjective', function(response) {
-      //word is the key of the response
-      var adjective = response.word;
-      $('#adjective').text(adjective);
+//Copy button setup
+
+
+var textToBeCopied;
+
+var copyToClipboard = (function() {
+
+    var _dataString = null;
+    document.addEventListener("copy", function(e) {
+        if (_dataString !== null) {
+            try {
+                e.clipboardData.setData("text/plain", _dataString);
+                e.preventDefault();
+            } finally {
+                _dataString = null;
+            }
+        }
     });
 
-    $.get('noun', function(response) {
-      var noun = response.word;
-      $('#noun').text(noun);
-    });
+    return function(data) {
+        var toBeCopied = $('#finalText').text();
+        _dataString = toBeCopied;
+        document.execCommand("copy");
+    };
+})();
 
-    $.get('verb', function(response) {
-      var verb = response.word;
-      $('#verb').text(verb);
-    });
-  });
 
-  //make an event handler that, when the button is clicked sends a post request to server
-  $('#submitWords').on('submit', function(event) {
-    event.preventDefault();
+function generateText() {
+    $("#finalText").text("");
 
-    //get the text entered in the text box and save to a variable
-    var wordAdd = $('input[name=aWord]').val();
-    var wordToAdd = wordAdd.toLowerCase();
-    var adjectivePost;
-    var nounPost;
-    var verbPost;
-    if ($('select[name=partOfSpeech]').val() == '1') {
-      adjectivePost = {word: wordToAdd};
-      $.post('adjective', adjectivePost, function(response) {
-        var adjectiveRes = response.message;
-        $('#wordRes').text(adjectiveRes);
-      });
-    } else if ($('select[name=partOfSpeech]').val() == '2') {
-      nounPost = {word: wordToAdd};
-      $.post('noun', nounPost, function(response) {
-        var nounRes = response.message;
-        $('#wordRes').text(nounRes);
-      });
-    } else if ($('select[name=partOfSpeech]').val() == '3') {
-      verbPost = {word: wordToAdd};
-      $.post('verb', verbPost, function(response) {
-        var verbRes = response.message;
-        $('#wordRes').text(verbRes);
-      });
-    }
-  });
-});
+    var theBrand = $('input[name=brand]').val();
+    var theSize = $('input[name=size]').val();
+    var theCondition;
+    var theConditionText = $('input[name=conditionText]').val();
+    var theMaterial = $('input[name=material]').val();
+    var theColor = $('input[name=color]').val();
+    var theBonusLine = $('input[name=bonusLine]').val();
 
-$('#getAdj').click(function() {
-  $('#adjDisplay li').remove();
-  $.get('adjectiveList', function(response) {
-    response.sort(function(a, b) {
-      if (a > b) {
-        return 1;
-      } else if (a < b) {
-        return -1;
-      } else {
-        return 0;
+    if ($('select[name=condition]').val() == '1') {
+        var theCondition = "Excellent Condition, Never Worn, Still Has Tags";    
+    } else if ($('select[name=condition]').val() == '2') {
+        var theCondition = "Excellenet Condition, Never Worn";
+    } else if ($('select[name=condition]').val() == '3') {
+        var theCondition = "PreOWned";
+    };
+    
+    $("#finalText").append(function(){
+      if(theBrand !== "") {
+        return '<p>•Brand: ' + theBrand + '\n';
+      }
+    }).append(function(){
+      if(theSize !== "") {
+        return '<p>•Size: ' + theSize + '\n';
+      }
+    }).append(function(){
+        return '<p>•' + theCondition + '\n';
+      }).append(function(){
+      if(theConditionText !== "") {
+        return '<p>•' + theConditionText + '\n';
+      }
+    }).append(function(){
+      if(theSize !== "") {
+        return '<p>•Material: ' + theMaterial + '\n';
+      }
+    }).append(function(){
+      if(theColor !== "") {
+        return '<p>•Color: ' + theColor + '\n';
+      }
+    }).append(function(){
+      if(theBonusLine !== "") {
+        return '<p>•' + theBonusLine + '\n';
       }
     });
 
-    $.each(response, function() {
-      $('<li>' + this + '</li>').appendTo('#adjDisplay');
+    var allTheBonusLines = $('[class |= allBonusLines]');
+    var additionalLines = $(allTheBonusLines).each(function() {
+        var bonusObject = this;
+        var bonusValues = $(bonusObject).val();
+        $("#finalText").append('•' + bonusValues + '\n<br />');
+
     });
-  });
+  
+
+
+};
+
+var nextIncrement = 0;
+$('input[name=addOneLine]').click(function(e) {
+    e.preventDefault();
+    nextIncrement++;
+    $('#lineSpace').append('<form><input type="text" class="allBonusLines" name="bonusLine' + nextIncrement + '" /></form>');
+    var currentBonusLine = $('.allBonusLines' + nextIncrement);
+    var allTheBonusLines = $('[class |= allBonusLines]');
+    var theValue = allTheBonusLines.text();
+
+    // alert(allTheBonusLines);
 });
 
-$('#getNoun').click(function() {
-  $('#nounDisplay li').remove();
-  $.get('nounList', function(response) {
-    response.sort(function(a, b) {
-      if (a > b) {
-        return 1;
-      } else if (a < b) {
-        return -1;
-      } else {
-        return 0;
-      }
-    });
 
-    $.each(response, function() {
-      $('<li>' + this + '</li>').appendTo('#nounDisplay');
-    });
-  });
-});
 
-$('#getVerb').click(function() {
-  $('#verbDisplay li').remove();
-  $.get('verbList', function(response) {
-    response.sort(function(a, b) {
-      if (a > b) {
-        return 1;
-      } else if (a < b) {
-        return -1;
-      } else {
-        return 0;
-      }
-    });
 
-    $.each(response, function() {
-      $('<li>' + this + '</li>').appendTo('#verbDisplay');
-    });
-  });
-});
+function reloadThePage() {
+    location.reload();
+};
+
+// 'use strict';
+
+// //Copy button setup
+
+
+// var textToBeCopied;
+
+// var copyToClipboard = (function() {
+
+//     var _dataString = null;
+//     document.addEventListener("copy", function(e) {
+//         if (_dataString !== null) {
+//             try {
+//                 e.clipboardData.setData("text/plain", _dataString);
+//                 e.preventDefault();
+//             } finally {
+//                 _dataString = null;
+//             }
+//         }
+//     });
+
+//     return function(data) {
+//         var toBeCopied = $('#finalText').text();
+//         _dataString = toBeCopied;
+//         document.execCommand("copy");
+//     };
+// })();
+
+
+// function generateText() {
+//     $("#finalText").text("");
+
+//     var theBrand = $('input[name=brand]').val();
+//     var theSize = $('input[name=size]').val();
+//     var theCondition;
+//     var theConditionText = $('input[name=conditionText]').val();
+//     var theMaterial = $('input[name=material]').val();
+//     var theColor = $('input[name=color]').val();
+//     var theBonusLine = $('input[name=bonusLine]').val();
+
+//     if ($('select[name=condition]').val() == '1') {
+//         var theCondition = "Excellent Condition, Never Worn, Still Has Tags";    
+//     } else if ($('select[name=condition]').val() == '2') {
+//         var theCondition = "Excellenet Condition, Never Worn";
+//     } else if ($('select[name=condition]').val() == '3') {
+//         var theCondition = "PreOWned";
+//     };
+    
+//     $("#finalText").append('<p id="theList">•Brand: ' + theBrand +
+//         '\n<br />•Size: ' + theSize +
+//         '\n<br />•' + theCondition +
+//         '\n<br />•' + theConditionText +
+//         '\n<br />•Material: ' + theMaterial +
+//         '\n<br />•Color: ' + theColor +
+//         '\n<br />•' + theBonusLine +
+//         '\n<br /></p>');
+
+//     var allTheBonusLines = $('[class |= allBonusLines]');
+//     var additionalLines = $(allTheBonusLines).each(function() {
+//         var bonusObject = this;
+//         var bonusValues = $(bonusObject).val();
+//         $("#theList").append('•' + bonusValues);
+
+//     });
+  
+
+
+// };
+
+// var nextIncrement = 0;
+// $('input[name=addOneLine]').click(function(e) {
+//     e.preventDefault();
+//     nextIncrement++;
+//     $('#lineSpace').append('<form><input type="text" class="allBonusLines" name="bonusLine' + nextIncrement + '" /></form>');
+//     var currentBonusLine = $('.allBonusLines' + nextIncrement);
+//     var allTheBonusLines = $('[class |= allBonusLines]');
+//     var theValue = allTheBonusLines.text();
+
+//     // alert(allTheBonusLines);
+// });
+
+
+
+
+// function reloadThePage() {
+//     location.reload();
+// };
+
+
+

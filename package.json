@@ -8,6 +8,7 @@
   "description": "Example Site for JavaScript F2 at Code Fellows",
   "dependencies": {
     "body-parser": "^1.13.2",
+    "clipboard-js": "^0.3.3",
     "express": "^4.13.1"
   },
   "devDependencies": {
