@@ -1,0 +1,71 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <h2>
+      Resale Posting Template
+    </h2>
+      <form id="itemInfo">
+
+        <input type="button" onclick="reloadThePage()" value="Reload Page" />
+        <br /><br />
+
+        <label>
+          Brand: 
+        </label>
+        <input type="text" name="brand" />
+        <br /><br />
+        <label>
+          Size: 
+        </label>
+        <input type="text" name="size" />
+        <br /><br />
+        <label>
+          Condition: 
+        </label>
+        <select name="condition">
+          <option name="newTags" value="1">New with Tags</option>
+          <option name="newNoTags" value="2">New without Tags</option>
+          <option name="preowned" value="3">PreOwned</option>
+        </select>
+        <br /><br />
+        <label>
+          Optional Condition Text: 
+        </label>
+        <input type="text" name="conditionText" />
+        <br /><br />
+        <label>
+          Material: 
+        </label>
+        <input type="text" name="material" />
+        <br /><br />
+        <label>
+          Color: 
+        </label>
+        <input type="text" name="color" />
+        <br /><br />
+        <label>
+          Additional Line: 
+        </label>
+        <input type="text" name="bonusLine" />
+        <input type="submit" name="addOneLine" value="+" />
+        <br /><br />
+        <div id="lineSpace"></div>
+
+        <input type="button" onclick="generateText()" value="Submit Form" />
+        <br /><br />
+
+        
+      </form>
+
+      <div id="textBox"><p id="finalText"></p></div>
+      <button onclick="copyToClipboard(textToBeCopied)">Copy It!</button>
+     
+  
+      <script src="jquery-3.2.1.min.js"></script>
+      <!-- <script src="clipboard.js"></script> -->
+     <script src="../clipboard/dist/clipboard.js"></script>
+      <script src="script.js"></script>
+  </body>
+</html>

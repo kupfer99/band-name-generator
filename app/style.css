@@ -1,0 +1,34 @@
+
+[class |= allBonusLines] {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+#textBox {
+	background-color: black;
+	color: white;
+}
+
+h2 {
+	background-color: black;
+	color: white;
+}
+
+body {
+	/*background-image: url('https://media.giphy.com/media/9QbDWTcnq4wmc/giphy.gif');*/
+	background: url('https://media.giphy.com/media/9QbDWTcnq4wmc/giphy.gif') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+#itemInfo label{
+	background-color: black;
+	color: white;
+}
+
